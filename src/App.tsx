@@ -1,35 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useReducer } from 'react'
+import { reducer } from '@features/state-machine/reducer'
+import type { State } from '@features/state-machine/types'
 
-function App() {
-  const [count, setCount] = useState(0)
+const initialState: State = { status: 'idle' }
+
+export default function App() {
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <pre>{JSON.stringify(state, null, 2)}</pre>
+      <button onClick={() => dispatch({ type: 'EDITING', value: 'hi' })}>
+        Edit
+      </button>
+    </div>
   )
 }
-
-export default App
