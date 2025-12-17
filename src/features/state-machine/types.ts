@@ -8,7 +8,8 @@ export type Action = | { type: 'EDITING'; value: string }
     | { type: 'SUBMIT' }
     | { type: 'RESOLVE' }
     | { type: 'REJECT'; message: string }
-    | { type: 'RESET' };
+    | { type: 'RESET' }
+    | { type: 'TIMEOUT' };
 
 
 //Stateler discriminated union type olarak tanımlandı. status burada discriminant.

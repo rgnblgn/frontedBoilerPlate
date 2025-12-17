@@ -12,6 +12,9 @@ export function reducer(state: State, action: Action): State {
             if (action.type === "SUBMIT") {
                 return { status: 'submitting' };
             }
+            if (action.type === 'TIMEOUT') {
+                return { status: 'error', message: 'Timed out' }
+            }
             return state;
         case 'submitting':
             if (action.type === "RESOLVE") {

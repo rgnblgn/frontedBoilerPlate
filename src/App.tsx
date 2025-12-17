@@ -1,17 +1,36 @@
-import { useReducer } from 'react'
-import { reducer } from '@features/state-machine/reducer'
+import { useEffect, useState } from 'react'
+import { createStateMachine } from '@features/state-machine/machine'
 import type { State } from '@features/state-machine/types'
 
-const initialState: State = { status: 'idle' }
+const machine = createStateMachine({ status: 'idle' })
 
 export default function App() {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, setState] = useState<State>(machine.getState())
+
+  useEffect(() => {
+    return machine.subscribe(setState)
+  }, [])
 
   return (
-    <div>
+    <div style={{ padding: 20 }}>
+      <h1>Machine demo</h1>
+
       <pre>{JSON.stringify(state, null, 2)}</pre>
-      <button onClick={() => dispatch({ type: 'EDITING', value: 'hi' })}>
+
+      <button
+        onClick={() =>
+          machine.dispatch({ type: 'EDITING', value: 'hello' })
+        }
+      >
         Edit
+      </button>
+
+      <button
+        onClick={() =>
+          machine.dispatch({ type: 'SUBMIT' })
+        }
+      >
+        Submit
       </button>
     </div>
   )
